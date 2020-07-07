@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Item
+<<<<<<< HEAD
 # from django.contrib import messages
 # from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
@@ -13,12 +14,22 @@ from django.views.generic import ListView, DetailView
 #         'items': Item.objects.all()
 #     }
 #     return render(request, "product.html", context)
+=======
+
+
+def products(request):
+    context = {
+        'items': Item.objects.all()
+    }
+    return render(request, "products.html", context)
+>>>>>>> e8995eda040034fa45d51e1774f450c1fd96d922
 
 
 def checkout(request):
     return render(request, "checkout.html")
 
 
+<<<<<<< HEAD
 class HomeView(ListView):
     model = Item
     template_name = "home.html"
@@ -82,3 +93,10 @@ class ItemDetailView(DetailView):
 #     else:
 #         messages.info(request, "You do not have an active order")
 #         return redirect("core:product", slug=slug)
+=======
+def home(request):
+    context = {
+        'items': Item.objects.all()
+    }
+    return render(request, "home.html", context)
+>>>>>>> e8995eda040034fa45d51e1774f450c1fd96d922
