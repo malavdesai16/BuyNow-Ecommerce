@@ -1,0 +1,3 @@
+- Item Cart Update(according to quantity not the item type) 
+-User Cart Update(the cart should be updated by diffrent user values)
+-Item quantity not reseted after whole cart is deleted 
