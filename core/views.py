@@ -39,14 +39,7 @@ class CheckoutView(View):
                 apartment_address = form.cleaned_data.get('apartment_address')
                 country = form.cleaned_data.get('country')
                 zip = form.cleaned_data.get('zip')
-                if payment_option == 'S':
-                    return redirect('core:payment', payment_option='stripe')
-                elif payment_option == 'P':
-                    return redirect('core:payment', payment_option='paypal')
-                else:
-                    messages.warning(
-                        self.request, "Invalid payment option selected")
-                    return redirect('core:checkout')
+                payment_option = form.cleaned_data.get('payment_option')
                 billing_address = BillingAddress(
                     user=self.request.user,
                     street_address=street_address,
@@ -57,10 +50,14 @@ class CheckoutView(View):
                 billing_address.save()
                 order.billing_address = billing_address
                 order.save()
-                # TODO: add redirect to the selected payment option
-                return redirect('core:checkout')
-            messages.warning(self.request, "Failed checkout")
-            return redirect('core:checkout')
+                if payment_option == 'S':
+                    return redirect('core:payment', payment_option='stripe')
+                elif payment_option == 'P':
+                    return redirect('core:payment', payment_option='paypal')
+                else:
+                    messages.warning(
+                        self.request, "Invalid payment option selected")
+                    return redirect('core:checkout')
         except ObjectDoesNotExist:
             messages.error(self.request, "You do not have an active order")
             return redirect("core:order-summary")
