@@ -118,7 +118,7 @@ class OrderItem(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
-    # ref_code = models.CharField(max_length=20, blank=True, null=True)
+    ref_code = models.CharField(max_length=20)
     items = models.ManyToManyField(OrderItem)
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
@@ -133,10 +133,10 @@ class Order(models.Model):
         'Payment', on_delete=models.SET_NULL, blank=True, null=True)
     coupon = models.ForeignKey(
         'Coupon', on_delete=models.SET_NULL, blank=True, null=True)
-#     being_delivered = models.BooleanField(default=False)
-#     received = models.BooleanField(default=False)
-#     refund_requested = models.BooleanField(default=False)
-#     refund_granted = models.BooleanField(default=False)
+    being_delivered = models.BooleanField(default=False)
+    received = models.BooleanField(default=False)
+    refund_requested = models.BooleanField(default=False)
+    refund_granted = models.BooleanField(default=False)
 
 #     '''
 #     1. Item added to cart
@@ -208,14 +208,14 @@ class Coupon(models.Model):
         return self.code
 
 
-# class Refund(models.Model):
-#     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-#     reason = models.TextField()
-#     accepted = models.BooleanField(default=False)
-#     email = models.EmailField()
+class Refund(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    reason = models.TextField()
+    accepted = models.BooleanField(default=False)
+    email = models.EmailField(default=False)
 
-#     def __str__(self):
-#         return f"{self.pk}"
+    def __str__(self):
+        return f"{self.pk}"
 
 
 # def userprofile_receiver(sender, instance, created, *args, **kwargs):
