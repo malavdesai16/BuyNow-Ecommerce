@@ -20,6 +20,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'crispy_forms',
+    'django_countries',
+
     'core'
 
 ]
@@ -99,3 +101,6 @@ LOGIN_REDIRECT_URL = '/'
 # CRISPY FORMS
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+STRIPE_PUBLIC_KEY = ''
+STRIPE_SECRET_KEY = 'sk_test_51H2nKJLST9MF6Y8tLrfqlJx2X7OiOEbyhRwIGJynia5NHAHyg2efFUHWQJc4AQd0kKugqAB3pqM2bdGMdsEBVSy700bU3vPMR1'

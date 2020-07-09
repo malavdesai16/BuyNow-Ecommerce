@@ -1,5 +1,4 @@
 {% extends "account/base.html" %}
-
 {% load i18n %}
 {% load account socialaccount %}
 {% load crispy_forms_tags %}
@@ -10,14 +9,11 @@
 
 <main>
   <div class="container">
-
-    <!--Section: Products v.3-->
     <section class="mb-4">
-
-      <!--Grid row-->
       <div class="row wow fadeIn">
-      <div class="col-6 offset-3">
+        <div class='col-6 offset-3'>
         <h1>{% trans "Sign In" %}</h1>
+
         {% get_providers as socialaccount_providers %}
 
         {% if socialaccount_providers %}
@@ -51,12 +47,11 @@
           <a class="btn btn-default" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
           <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
         </form>
-      </div>
+        </div
       </div>
     </section>
   </div>
 </main>
-
 
 
 

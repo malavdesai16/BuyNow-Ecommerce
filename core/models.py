@@ -30,7 +30,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Sum
 from django.shortcuts import reverse
-# from django_countries.fields import CountryField
+from django_countries.fields import CountryField
 
 
 CATEGORY_CHOICES = (
@@ -123,12 +123,14 @@ class Order(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
+    billing_address = models.ForeignKey(
+        'BillingAddress', on_delete=models.SET_NULL, blank=True, null=True)
 #     shipping_address = models.ForeignKey(
 #         'Address', related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
 #     billing_address = models.ForeignKey(
 #         'Address', related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
-#     payment = models.ForeignKey(
-#         'Payment', on_delete=models.SET_NULL, blank=True, null=True)
+    payment = models.ForeignKey(
+        'Payment', on_delete=models.SET_NULL, blank=True, null=True)
 #     coupon = models.ForeignKey(
 #         'Coupon', on_delete=models.SET_NULL, blank=True, null=True)
 #     being_delivered = models.BooleanField(default=False)
@@ -175,16 +177,27 @@ class Order(models.Model):
 #     class Meta:
 #         verbose_name_plural = 'Addresses'
 
+class BillingAddress(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    street_address = models.CharField(max_length=100)
+    apartment_address = models.CharField(max_length=100)
+    country = CountryField(multiple=False)
+    zip = models.CharField(max_length=100)
 
-# class Payment(models.Model):
-#     stripe_charge_id = models.CharField(max_length=50)
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-#                              on_delete=models.SET_NULL, blank=True, null=True)
-#     amount = models.FloatField()
-#     timestamp = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.user.username
 
-#     def __str__(self):
-#         return self.user.username
+
+class Payment(models.Model):
+    stripe_charge_id = models.CharField(max_length=50)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.SET_NULL, blank=True, null=True)
+    amount = models.FloatField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
 
 
 # class Coupon(models.Model):
