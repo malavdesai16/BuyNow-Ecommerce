@@ -26,6 +26,7 @@
 
 
 # from django.db.models.signals import post_save
+from django.db.models.signals import post_save
 from django.conf import settings
 from django.db import models
 from django.db.models import Sum
@@ -51,14 +52,14 @@ ADDRESS_CHOICES = (
 )
 
 
-# class UserProfile(models.Model):
-#     user = models.OneToOneField(
-#         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     stripe_customer_id = models.CharField(max_length=50, blank=True, null=True)
-#     one_click_purchasing = models.BooleanField(default=False)
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    stripe_customer_id = models.CharField(max_length=50, blank=True, null=True)
+    one_click_purchasing = models.BooleanField(default=False)
 
-#     def __str__(self):
-#         return self.user.username
+    def __str__(self):
+        return self.user.username
 
 
 class Item(models.Model):
@@ -136,16 +137,16 @@ class Order(models.Model):
     refund_requested = models.BooleanField(default=False)
     refund_granted = models.BooleanField(default=False)
 
-#     '''
-#     1. Item added to cart
-#     2. Adding a billing address
-#     (Failed checkout)
-#     3. Payment
-#     (Preprocessing, processing, packaging etc.)
-#     4. Being delivered
-#     5. Received
-#     6. Refunds
-#     '''
+    '''
+    1. Item added to cart
+    2. Adding a billing address
+    (Failed checkout)
+    3. Payment
+    (Preprocessing, processing, packaging etc.)
+    4. Being delivered
+    5. Received
+    6. Refunds
+    '''
 
     def __str__(self):
         return self.user.username
@@ -176,18 +177,6 @@ class Address(models.Model):
         verbose_name_plural = 'Addresses'
 
 
-class BillingAddress(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE)
-    street_address = models.CharField(max_length=100)
-    apartment_address = models.CharField(max_length=100)
-    country = CountryField(multiple=False)
-    zip = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.user.username
-
-
 class Payment(models.Model):
     stripe_charge_id = models.CharField(max_length=50)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -211,15 +200,15 @@ class Refund(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     reason = models.TextField()
     accepted = models.BooleanField(default=False)
-    email = models.EmailField(default=False)
+    email = models.EmailField()
 
     def __str__(self):
         return f"{self.pk}"
 
 
-# def userprofile_receiver(sender, instance, created, *args, **kwargs):
-#     if created:
-#         userprofile = UserProfile.objects.create(user=instance)
+def userprofile_receiver(sender, instance, created, *args, **kwargs):
+    if created:
+        userprofile = UserProfile.objects.create(user=instance)
 
 
-# post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
+post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)

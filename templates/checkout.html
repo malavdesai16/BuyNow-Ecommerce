@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+
 {% block content %}
+
   <main >
     <div class="container wow fadeIn">
       <h2 class="my-5 h2 text-center">Checkout form</h2>
@@ -61,7 +63,7 @@
 
               <hr>
 
-            <h3>Billing address</h3>
+              <h3>Billing address</h3>
 
               <div class='hideable_billing_form'>
                 <div class="md-form mb-5">
@@ -105,7 +107,6 @@
                 <input type="checkbox" class="custom-control-input" name="use_default_billing" id="use_default_billing">
                 <label class="custom-control-label" for="use_default_billing">Use default billing address: {{ default_billing_address.street_address|truncatechars:10 }}</label>
               </div>
-
               {% endif %}
               <hr>
 
@@ -119,20 +120,26 @@
                 </div>
                 {% endfor %}
               </div>
+
               <hr class="mb-4">
               <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+
             </form>
+
           </div>
+
         </div>
+
         <div class="col-md-4 mb-4">
           {% include "order_snippet.html" %}
         </div>
+
       </div>
+
     </div>
   </main>
 
 {% endblock content %}
-
 
 {% block extra_scripts %}
 <script>

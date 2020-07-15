@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<main>
+  <main>
     <div class="container">
 
     <div class="table-responsive text-nowrap">
@@ -51,8 +50,10 @@
         </tr>
         {% endfor %}
         {% if object.coupon %}
+        <tr>
             <td colspan="4"><b>Coupon</b></td>
             <td><b>-${{ object.coupon.amount }}</b></td>
+        </tr>
         {% endif %}
         {% if object.get_total %}
         <tr>
@@ -72,6 +73,8 @@
     </div>
 
     </div>
-</main>
+  </main>
 
 {% endblock content %}
+
+
