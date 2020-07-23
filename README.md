@@ -1,9 +1,3 @@
-# Django Project Boilerplate
-
-This repository is a boilerplate Django project for quickly getting started.
-
-[![alt text](https://github.com/justdjango/django_project_boilerplate/blob/master/thumbnail.png "Logo")](https://www.youtube.com/watch?v=GEogao-tUec)
-
 ## Getting started
 
 Steps:
@@ -13,8 +7,9 @@ Steps:
 3. Configure your .env variables
 4. Rename your project with `python manage.py rename <yourprojectname> <newprojectname>`
 
-This project includes:
+The future implementations would include:
 
 1. Settings modules for deploying with Azure
 2. Django commands for renaming your project and creating a superuser
 3. A cli tool for setting environment variables for deployment
+4. Paying with Paypal 
